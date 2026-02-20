@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { AppShell } from "@/components/layout/AppShell";
 import { PageSection } from "@/components/layout/PageSection";
 import { ViewTabs, type ViewTabId } from "@/components/layout/ViewTabs";
@@ -24,7 +24,9 @@ export default function Home() {
             <p className="mb-4 text-sm text-zinc-500 dark:text-zinc-400">
               Results by constituency: winning party and vote share.
             </p>
-            <ConstituencyList />
+            <Suspense fallback={<div className="text-zinc-500 dark:text-zinc-400">Loading…</div>}>
+              <ConstituencyList />
+            </Suspense>
           </PageSection>
         }
         parliamentContent={

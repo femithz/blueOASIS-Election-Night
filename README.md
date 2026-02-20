@@ -6,11 +6,13 @@ Full-stack application for ingesting election result files and presenting result
 
 **Prerequisites:** Docker and Docker Compose installed.
 
-Run the entire system with a single command:
+From the **project root** (the folder that contains `docker-compose.yml`, `backend/`, and `frontend/`), run:
 
 ```bash
 docker compose up
 ```
+
+Do not run `docker compose` from inside `frontend/` or `backend/`—the compose file and build contexts expect to be run from the root.
 
 This starts:
 - **PostgreSQL** database (port 5432)

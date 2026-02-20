@@ -1,9 +1,9 @@
 FROM node:20-alpine AS base
 
-# Install dependencies only when needed
+# Install dependencies only when needed (no lockfile so Linux optional deps install correctly)
 FROM base AS deps
 WORKDIR /app
-COPY package*.json ./
+COPY package.json ./
 RUN npm install
 
 # Build the application
@@ -11,6 +11,8 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# Use node_modules SWC (from deps stage); avoid Next patching lockfile (which can hit yarn registry and fail)
+ENV NEXT_IGNORE_INCORRECT_LOCKFILE=1
 RUN npm run build
 
 # Production image
