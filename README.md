@@ -2,33 +2,84 @@
 
 Full-stack application for ingesting election result files and presenting results via APIs and UI.
 
-## Quick Start (Docker Compose)
+---
 
-**Prerequisites:** Docker and Docker Compose installed.
+## Steps to run on a new device (Docker)
 
-From the **project root** (the folder that contains `docker-compose.yml`, `backend/`, and `frontend/`), run:
+Follow these steps exactly so the app builds and runs without errors.
+
+### 1. Prerequisites
+
+- **Docker Desktop** (or Docker Engine + Docker Compose) installed and running.
+- The project folder (e.g. `blueoasis-election`) unpacked or cloned on the machine.
+
+### 2. Open a terminal in the project root
+
+- Open a terminal and go into the project folder.
+- You must be in the **project root**: the folder that contains `docker-compose.yml`, and the `backend/` and `frontend/` folders.
+
+Check you’re in the right place:
 
 ```bash
-docker compose up
+# You should see docker-compose.yml, backend, frontend
+ls
+# (or on Windows: dir)
 ```
 
-Do not run `docker compose` from inside `frontend/` or `backend/`—the compose file and build contexts expect to be run from the root.
+**Important:** Do **not** run Docker commands from inside `frontend/` or `backend/`. Always run from the root folder that contains `docker-compose.yml`.
 
-This starts:
-- **PostgreSQL** database (port 5432)
-- **Backend API** (http://localhost:3001)
-- **Frontend UI** (http://localhost:3000)
+### 3. Build and start everything
 
-Wait for all services to be healthy, then open http://localhost:3000 in your browser.
+From the project root, run:
 
-To stop all services:
+```bash
+docker compose up --build
+```
+
+- First time (or after code changes), `--build` rebuilds the images. This can take a few minutes.
+- Wait until you see the backend and frontend logs without errors (e.g. “Ready” or “Listening on port 3000”).
+
+### 4. Open the app
+
+- In your browser go to: **http://localhost:3000**
+- Backend API: **http://localhost:3001**
+
+### 5. Stop the app
+
+In the same terminal, press `Ctrl+C`, then:
+
 ```bash
 docker compose down
 ```
 
-To rebuild after code changes:
+---
+
+## Quick reference (same as above, short)
+
+| Step | Command / action |
+|------|-------------------|
+| 1 | Install Docker Desktop and start it. |
+| 2 | Open terminal in **project root** (folder with `docker-compose.yml`, `backend/`, `frontend/`). |
+| 3 | Run: `docker compose up --build` |
+| 4 | Open http://localhost:3000 in the browser. |
+| 5 | To stop: `Ctrl+C` then `docker compose down` |
+
+**If something fails:** Make sure you are **not** inside `frontend/` or `backend/` when running `docker compose`. Run from the root folder only.
+
+---
+
+## Rebuild after code changes
+
+From the project root:
+
 ```bash
 docker compose up --build
+```
+
+Or to rebuild only one service (e.g. frontend):
+
+```bash
+docker compose up --build frontend
 ```
 
 ## Upload Result Files
