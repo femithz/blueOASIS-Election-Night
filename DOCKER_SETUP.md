@@ -15,7 +15,7 @@ This single command starts:
 
 - **PostgreSQL**: Port 5432
 - **Backend API**: http://localhost:3001
-- **Frontend UI**: http://localhost:3000
+- **Frontend UI**: http://localhost:3002
 
 ## Environment Variables
 
@@ -55,6 +55,6 @@ docker compose down -v
 
 ## Troubleshooting
 
-- **Port conflicts**: If ports 3000, 3001, or 5432 are in use, modify `docker-compose.yml`
+- **Port conflicts**: If ports 3001, 3002, or 5432 are in use, modify `docker-compose.yml`
 - **Database connection**: Backend waits for PostgreSQL health check before starting
 - **Build failures**: Ensure Docker has sufficient memory (recommended: 4GB+)

@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:16-alpine
+    image: postgres:15-alpine
     container_name: election-postgres
     environment:
       POSTGRES_USER: postgres
@@ -18,6 +18,19 @@ services:
       timeout: 5s
       retries: 5
 
+  # One-time fix for "no actual collation version" warning (runs after postgres is up)
+  postgres-collation-fix:
+    image: postgres:15-alpine
+    container_name: election-postgres-collation-fix
+    environment:
+      PGPASSWORD: postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: >
+      sh -c "psql -h postgres -U postgres -c \"ALTER DATABASE postgres REFRESH COLLATION VERSION;\" || true"
+    restart: "no"
+
   backend:
     build:
       context: ./backend
@@ -29,7 +42,7 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       DB_DATABASE: election
-      NODE_ENV: production
+      NODE_ENV: development
       PORT: 3001
     ports:
       - "3001:3001"
@@ -46,8 +59,9 @@ services:
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:3001
       NODE_ENV: production
+      SESSION_SECRET: election-frontend-session-secret
     ports:
-      - "3000:3000"
+      - "3002:3000"   # host 3002 (3000 often in use); app at http://localhost:3002
     depends_on:
       - backend
     restart: unless-stopped

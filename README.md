@@ -41,7 +41,7 @@ docker compose up --build
 
 ### 4. Open the app
 
-- In your browser go to: **http://localhost:3000**
+- In your browser go to: **http://localhost:3002** (frontend; 3000 if you changed `docker-compose.yml`)
 - Backend API: **http://localhost:3001**
 
 ### 5. Stop the app
@@ -61,7 +61,7 @@ docker compose down
 | 1 | Install Docker Desktop and start it. |
 | 2 | Open terminal in **project root** (folder with `docker-compose.yml`, `backend/`, `frontend/`). |
 | 3 | Run: `docker compose up --build` |
-| 4 | Open http://localhost:3000 in the browser. |
+| 4 | Open http://localhost:3002 in the browser (frontend). |
 | 5 | To stop: `Ctrl+C` then `docker compose down` |
 
 **If something fails:** Make sure you are **not** inside `frontend/` or `backend/` when running `docker compose`. Run from the root folder only.
@@ -92,7 +92,7 @@ curl -X POST http://localhost:3001/api/import -F "file=@backend/data/sample-resu
 ```
 
 **Using the UI:**
-1. Open http://localhost:3000
+1. Open http://localhost:3002
 2. Click "Upload result file" button
 3. Select a `.txt` or `.csv` file (one constituency per line)
 
